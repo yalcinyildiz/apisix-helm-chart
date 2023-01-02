@@ -234,7 +234,9 @@ extraEnvVars:
   - name: ETCD_ELECTION_TIMEOUT
     value: "5000"
   - name: ETCD_SNAPSHOT_COUNT
-    value: "30"
+    value: "100"
+  - name: ETCD_MAX_SNAPSHOTS
+    value: "5"
 ## @param extraEnvVarsCM Name of existing ConfigMap containing extra env vars
 ##
 extraEnvVarsCM: ""
@@ -577,7 +579,7 @@ persistence:
     - ReadWriteOnce
   ## @param persistence.size PVC Storage Request for etcd data volume
   ##
-  size: 8Gi
+  size: 1Gi
   ## @param persistence.selector [object] Selector to match an existing Persistent Volume
   ## ref: https://kubernetes.io/docs/concepts/storage/persistent-volumes/#selector
   ##
@@ -781,18 +783,18 @@ startFromSnapshot:
 disasterRecovery:
   ## @param disasterRecovery.enabled Enable auto disaster recovery by periodically snapshotting the keyspace
   ##
-  enabled: false
+  enabled: true
   cronjob:
     ## @param disasterRecovery.cronjob.schedule Schedule in Cron format to save snapshots
     ## See https://en.wikipedia.org/wiki/Cron
     ##
-    schedule: "*/30 * * * *"
+    schedule: "*/* 1 * * *"
     ## @param disasterRecovery.cronjob.historyLimit Number of successful finished jobs to retain
     ##
     historyLimit: 1
     ## @param disasterRecovery.cronjob.snapshotHistoryLimit Number of etcd snapshots to retain, tagged by date
     ##
-    snapshotHistoryLimit: 1
+    snapshotHistoryLimit: 2
     ## @param disasterRecovery.cronjob.podAnnotations [object] Pod annotations for cronjob pods
     ## ref: https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/
     ##
@@ -832,10 +834,10 @@ disasterRecovery:
     existingClaim: ""
     ## @param disasterRecovery.pvc.size PVC Storage Request
     ##
-    size: 8Gi
+    size: 1Gi
     ## @param disasterRecovery.pvc.storageClassName Storage Class for snapshots volume
     ##
-    storageClassName: ""
+    storageClassName: "standard"
 
 ## @section Service account parameters
 ##
