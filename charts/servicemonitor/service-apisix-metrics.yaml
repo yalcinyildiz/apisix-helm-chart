@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: apisix-metrics-test
+  namespace: apisix-test
+  labels:
+    app: apisix-metrics-test
+spec:
+  ports:
+  - name: prometheus
+    port: 9091
+    targetPort: 9091
+    protocol: TCP
+  selector:
+    app.kubernetes.io/instance: apisix-test

@@ -56,6 +56,9 @@ spec:
     nodePort: {{ .Values.gateway.http.nodePort }}
   {{- end }}
     protocol: TCP
+  {{- if (not (empty .Values.gateway.http.appProtocol)) }}
+    appProtocol: {{ .Values.gateway.http.appProtocol }}
+  {{- end }}
   {{- end }}
   {{- if or .Values.gateway.tls.enabled }}
   - name: apisix-gateway-tls
@@ -65,6 +68,9 @@ spec:
     nodePort: {{ .Values.gateway.tls.nodePort }}
   {{- end }}
     protocol: TCP
+  {{- if (not (empty .Values.gateway.tls.appProtocol)) }}
+    appProtocol: {{ .Values.gateway.tls.appProtocol }}
+  {{- end }}
   {{- end }}
   {{- if and .Values.gateway.stream.enabled (or (gt (len .Values.gateway.stream.tcp) 0) (gt (len .Values.gateway.stream.udp) 0)) }}
   {{- with .Values.gateway.stream }}

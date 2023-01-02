@@ -31,10 +31,6 @@ helm repo update
 helm install apisix apisix/apisix --create-namespace  --namespace apisix
 ```
 
-:::note
-
-The latest APISIX Dashboard are not compatible with APISIX 3.x.
-
 ## Uninstall
 
 To uninstall/delete the `apisix` release:

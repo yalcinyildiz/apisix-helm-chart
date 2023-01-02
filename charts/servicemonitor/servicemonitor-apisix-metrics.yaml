@@ -1,0 +1,26 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  annotations:
+    meta.helm.sh/release-name: apisix-test
+    meta.helm.sh/release-namespace: apisix-test
+  labels:
+    app.kubernetes.io/instance: apisix-test
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/name: apisix
+    app.kubernetes.io/version: 2.15.0
+    helm.sh/chart: apisix-0.11.0
+  name: apisix-test
+  namespace: apisix-test
+spec:
+  endpoints:
+  - interval: 15s
+    path: /apisix/prometheus/metrics
+    scheme: http
+    targetPort: prometheus
+  namespaceSelector:
+    matchNames:
+    - apisix-test
+  selector:
+    matchLabels:
+      app: apisix-metrics-test
