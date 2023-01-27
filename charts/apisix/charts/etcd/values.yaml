@@ -783,12 +783,12 @@ startFromSnapshot:
 disasterRecovery:
   ## @param disasterRecovery.enabled Enable auto disaster recovery by periodically snapshotting the keyspace
   ##
-  enabled: true
+  enabled: false
   cronjob:
     ## @param disasterRecovery.cronjob.schedule Schedule in Cron format to save snapshots
     ## See https://en.wikipedia.org/wiki/Cron
-    ##
-    schedule: "*/* 1 * * *"
+    ## 0 * * * * -> Every 1 hour
+    schedule: "0 * * * *"
     ## @param disasterRecovery.cronjob.historyLimit Number of successful finished jobs to retain
     ##
     historyLimit: 1
